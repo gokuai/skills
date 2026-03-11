@@ -1,0 +1,182 @@
+# 够快云库连接器配置文件示例
+# 复制为 goukuai.yaml 并填入实际配置
+
+# ========== 认证配置 ==========
+
+credentials:
+  # 企业级认证（管理组织架构用）
+  client_id: "${GOUKUAI_CLIENT_ID}"
+  client_secret: "${GOUKUAI_CLIENT_SECRET}"
+  
+  # 库级认证（操作文件库用）
+  org_client_id: "${GOUKUAI_ORG_CLIENT_ID}"
+  org_client_secret: "${GOUKUAI_ORG_CLIENT_SECRET}"
+  
+  # API 域名
+  api_host: "yk3.gokuai.com"
+
+# ========== 权限配置 ==========
+
+permissions:
+  # 默认角色（新用户默认权限）
+  default_role: viewer  # viewer/editor/admin
+  
+  # 是否允许外部分享
+  allow_external_share: true
+  
+  # 外部分享是否需要审批
+  require_approval_for_share: true
+  
+  # 外链默认有效期（小时）
+  default_link_expire_hours: 48
+  
+  # 敏感操作需要二次验证
+  require_2fa_for_sensitive: false
+
+# ========== 审计日志 ==========
+
+audit:
+  # 是否启用审计日志
+  enabled: true
+  
+  # 日志文件路径
+  log_file: "/var/log/goukuai_audit.log"
+  
+  # 日志保留天数
+  retention_days: 365
+  
+  # 记录的操作类型
+  operations:
+    - download
+    - upload
+    - delete
+    - share
+    - permission_change
+
+# ========== 敏感文件保护 ==========
+
+sensitive:
+  # 是否启用敏感文件保护
+  enabled: true
+  
+  # 敏感文件匹配模式（支持通配符）
+  patterns:
+    - "*合同*"
+    - "*财务*"
+    - "*薪资*"
+    - "*机密*"
+    - "*保密*"
+    - "*password*"
+    - "*secret*"
+  
+  # 敏感文件操作限制
+  restrictions:
+    # 禁止下载
+    no_download: false
+    
+    # 强制水印
+    require_watermark: true
+    
+    # 禁止外链分享
+    no_external_share: true
+    
+    # 操作需要管理员审批
+    require_approval: false
+
+# ========== AI 增强配置 ==========
+
+ai:
+  # 是否启用 AI 功能
+  enabled: true
+  
+  # 文档摘要配置
+  summarization:
+    enabled: true
+    max_length: 500  # 摘要最大长度
+    model: "default" # 使用的 AI 模型
+  
+  # 文档问答配置
+  qa:
+    enabled: true
+    model: "default"
+    max_context_length: 4000  # 最大上下文长度
+  
+  # 智能分类配置
+  classification:
+    enabled: true
+    categories:
+      - 合同
+      - 财务
+      - 人事
+      - 技术
+      - 市场
+      - 行政
+
+# ========== 缓存配置 ==========
+
+cache:
+  # 是否启用缓存
+  enabled: true
+  
+  # 缓存类型（memory/redis）
+  type: memory
+  
+  # 缓存过期时间（秒）
+  ttl: 300
+  
+  # Redis 配置（type=redis 时使用）
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+    password: ""
+
+# ========== 限流配置 ==========
+
+rate_limit:
+  # 是否启用限流
+  enabled: true
+  
+  # 每分钟最大请求数
+  requests_per_minute: 100
+  
+  # 每秒最大请求数
+  requests_per_second: 10
+  
+  # 超限后等待时间（秒）
+  wait_time: 60
+
+# ========== 日志配置 ==========
+
+logging:
+  # 日志级别（DEBUG/INFO/WARNING/ERROR）
+  level: INFO
+  
+  # 日志格式
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+  # 日志文件
+  file: "/var/log/goukuai_connector.log"
+  
+  # 日志轮转
+  rotation:
+    max_bytes: 10485760  # 10MB
+    backup_count: 5
+
+# ========== 高级配置 ==========
+
+advanced:
+  # 请求超时时间（秒）
+  request_timeout: 30
+  
+  # 重试次数
+  retry_count: 3
+  
+  # 重试间隔（秒）
+  retry_delay: 1
+  
+  # 是否使用异步模式
+  async_mode: false
+  
+  # 并发数
+  max_concurrent_requests: 10

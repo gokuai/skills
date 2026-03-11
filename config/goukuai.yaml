@@ -1,0 +1,9 @@
+# 够快云库连接器配置文件
+
+credentials:
+  # 库级认证（操作文件库用）
+  org_client_id: "YOUR_ORG_CLIENT_ID"
+  org_client_secret: "YOUR_ORG_CLIENT_SECRET"
+  
+  # API 域名
+  api_host: "yk3.gokuai.com"
